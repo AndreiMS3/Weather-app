@@ -1,45 +1,56 @@
-import { displayWeather, showError, setWeatherTheme } from "./UI.js";
+import { displayWeather, showError } from "./UI.js";
 import { fetchWeather, fetchSuggestions } from "./script.js";
-import { apiKey } from "./config.js";  
+import { apiKey } from "./config.js";
 
 let timeoutId;
 
-// Función principal de búsqueda
 async function searchWeather() {
-    weatherDataSection.classList.add("fade-out");
-    try {
-        const weatherData = await fetchWeather(apiKey);
-        if (!weatherData) {
-            showError("Could not fetch weather data. Please try again later.");
-            return;
-        }
-       
-        displayWeather(weatherData);
-        setWeatherTheme(weatherData.weather[0].main); 
-    } catch (err) {
-        showError(err.message);
+  try {
+    // Comprueba que el input tenga algo (evita llamar a fetch si está vacío)
+    const searchInput = document.getElementById("search");
+    const text = searchInput ? searchInput.value.trim() : "";
+    if (!text) {
+      showError("Please enter a city name.");
+      return;
     }
+
+    const weatherData = await fetchWeather(apiKey);
+    if (!weatherData) {
+      showError("Could not fetch weather data. Please try again later.");
+      return;
+    }
+
+    await displayWeather(weatherData);
+    // setWeatherTheme ya se llama dentro de displayWeather
+  } catch (err) {
+    console.error(err);
+    showError(err.message || "Unexpected error");
+  }
 }
 
-// Click en el botón de búsqueda
-document.getElementById("submit").addEventListener("click", searchWeather);
+const submitBtn = document.getElementById("submit");
+if (submitBtn) submitBtn.addEventListener("click", searchWeather);
 
-// Enter en input
-document.getElementById("search").addEventListener("keydown", function(event) {
+const searchEl = document.getElementById("search");
+if (searchEl) {
+  searchEl.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
-        searchWeather();
+      event.preventDefault();
+      searchWeather();
     }
-});
+  });
 
-// Input con delay/autocomplete
-document.getElementById("search").addEventListener("input", function(event) {
+  searchEl.addEventListener("input", function (event) {
     clearTimeout(timeoutId);
     const text = event.target.value.trim();
-    if (!text) return; // Evita búsquedas vacías
+    if (!text) {
+      document.getElementById("suggestions").innerHTML = "";
+      return;
+    }
     timeoutId = setTimeout(() => {
-        fetchSuggestions(text, apiKey);
-    }, 750);
-});
-
+      fetchSuggestions(text, apiKey);
+    }, 650);
+  });
+}
 
 
