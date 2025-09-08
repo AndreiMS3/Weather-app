@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const geoResp = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=1&appid=${apiKey}`);
+    const geoResp = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(city)}&limit=1&appid=${apiKey}`);
     if (!geoResp.ok) {
         return res.status(geoResp.status).json({ error: "Error al consultar la API de geocodificación" });
     }

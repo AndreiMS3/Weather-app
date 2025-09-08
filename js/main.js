@@ -27,7 +27,7 @@ async function searchWeather() {
     showError(err.message || "Unexpected error");
   }
 }
-
+//Search by click or Enter key
 const submitBtn = document.getElementById("submit");
 if (submitBtn) submitBtn.addEventListener("click", searchWeather);
 
