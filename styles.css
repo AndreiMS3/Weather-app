@@ -95,10 +95,10 @@ body.default {
   cursor: pointer;
   transition: background-color 0.25s, transform 0.15s;
   border: 1px solid #4facfe;
-  background: white;
+  background: #1a80da; 
 }
 #submit:hover {
-  background-color: #4facfe;
+  background: #166bb3; 
   color: white;
   transform: scale(1.03);
 }

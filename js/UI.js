@@ -26,7 +26,7 @@ export async function displayWeather(weatherData) {
              alt="${weatherData.weather[0].description}" width="100" />
         <div style="flex:1; min-width:200px;">
           <h2>📍 ${weatherData.name}</h2>
-          <p>🌡️ <strong>Temperature:</strong> ${Math.round(weatherData.main.temp - 273.15)}°C</p>
+          <p>🌡️ <strong>Temperature:</strong> ${Math.round(weatherData.main.temp)}°C</p>
           <p>🌥️ <strong>Description:</strong> ${weatherData.weather[0].description}</p>
           <p>💧 <strong>Humidity:</strong> ${weatherData.main.humidity}%</p>
           <p>💨 <strong>Wind Speed:</strong> ${weatherData.wind.speed} m/s</p>
