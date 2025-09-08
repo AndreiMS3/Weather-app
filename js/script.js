@@ -19,7 +19,7 @@ async function fetchSuggestions(city) {
     if (!city) return;
     const response = await fetch(`/api/suggestions?city=${encodeURIComponent(city)}`);
     if (!response.ok) return;
-    
+
     const cities = await response.json();
     showSuggestions(cities);
 }
@@ -33,7 +33,7 @@ function showSuggestions(cities) {
 
     cities.forEach(city => {
         const li = document.createElement("li");
-        li.textContent = `${city.name}${city.state ? ", " + city.state : ""}, ${city.country}`;
+        li.textContent = `${city.name}, ${city.country}`;
         ul.appendChild(li);
 
         li.addEventListener("click", () => {

@@ -48,7 +48,7 @@ if (searchEl) {
       return;
     }
     timeoutId = setTimeout(() => {
-      fetchSuggestions(text, apiKey);
+      fetchSuggestions(text);
     }, 650);
   });
 }
