@@ -1,6 +1,6 @@
 import { displayWeather, showError } from "./UI.js";
 import { fetchWeather, fetchSuggestions } from "./script.js";
-import { apiKey } from "./config.js";
+
 
 let timeoutId;
 
@@ -14,14 +14,14 @@ async function searchWeather() {
       return;
     }
 
-    const weatherData = await fetchWeather(apiKey);
+    const weatherData = await fetchWeather();
     if (!weatherData) {
       showError("Could not fetch weather data. Please try again later.");
       return;
     }
 
     await displayWeather(weatherData);
-    // setWeatherTheme ya se llama dentro de displayWeather
+    
   } catch (err) {
     console.error(err);
     showError(err.message || "Unexpected error");

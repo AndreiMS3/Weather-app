@@ -2,29 +2,16 @@
 
 
 // Función para buscar el clima
-async function fetchWeather(apiKey) {
+async function fetchWeather() {
     const searchInput = document.getElementById("search").value.trim();
     if (!searchInput) {return;}
 
-    // Obtener coordenadas
-    const geocodeURL = `https://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=1&appid=${apiKey}`;
-    const geoResp = await fetch(geocodeURL);
-    if (!geoResp.ok) return null;
-
-    const geoData = await geoResp.json();
-    if (geoData.length === 0) {
-      return null;
-    }
-
-    const { lat, lon } = geoData[0];
-
-    // Obtener datos del clima
-    const weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-    const weatherResp = await fetch(weatherURL);
-    if (!weatherResp.ok) return null;
-
-    const weatherData = await weatherResp.json();
-    return weatherData;
+    const weatherResp = await fetch(`/api/weather?city=${encodeURIComponent(searchInput)}`);
+    if (!weatherResp.ok) {
+       return null;
+    } 
+    return await weatherResp.json(); //weatherData.
+    
 }
 
 // Obtener sugerencias
