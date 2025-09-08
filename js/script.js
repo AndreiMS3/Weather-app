@@ -15,11 +15,11 @@ async function fetchWeather() {
 }
 
 // Obtener sugerencias
-async function fetchSuggestions(text, apiKey) {
-    if (!text) return;
-    const geocodeURL = `https://api.openweathermap.org/geo/1.0/direct?q=${text}&limit=5&appid=${apiKey}`;
-    const response = await fetch(geocodeURL);
+async function fetchSuggestions(city) {
+    if (!city) return;
+    const response = await fetch(`/api/suggestions?city=${encodeURIComponent(city)}`);
     if (!response.ok) return;
+    
     const cities = await response.json();
     showSuggestions(cities);
 }

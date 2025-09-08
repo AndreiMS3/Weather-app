@@ -1,7 +1,10 @@
 export default async function handler(req, res) {
   const { city } = req.query;
   const apiKey = process.env.WEATHER_API_KEY; //from  Vercel
-  
+  if (!apiKey) {
+  return res.status(500).json({ error: "API key not found in environment variables" });
+  }
+
   try {
     const geoResp = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=1&appid=${apiKey}`);
     if (!geoResp.ok) {
