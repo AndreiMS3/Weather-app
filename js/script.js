@@ -1,5 +1,4 @@
-
-
+const suggestionsList = document.getElementById("suggestions");
 
 // Función para buscar el clima
 async function fetchWeather() {
@@ -15,18 +14,17 @@ async function fetchWeather() {
 }
 
 // Obtener sugerencias
-async function fetchSuggestions(city) {
+async function fetchSuggestions(city, onSelect) {
     if (!city) return;
     const response = await fetch(`/api/suggestions?city=${encodeURIComponent(city)}`);
     if (!response.ok) return;
 
     const cities = await response.json();
-    showSuggestions(cities);
+    showSuggestions(cities, onSelect);
 }
 
 // Mostrar sugerencias
-function showSuggestions(cities) {
-    const suggestionsList = document.getElementById("suggestions");
+function showSuggestions(cities, onSelect) {
     suggestionsList.innerHTML = "";
     const ul = document.createElement("ul");
     suggestionsList.appendChild(ul);
@@ -35,11 +33,12 @@ function showSuggestions(cities) {
         const li = document.createElement("li");
         li.textContent = `${city.name}, ${city.country}`;
         ul.appendChild(li);
-
-        li.addEventListener("click", () => {
+           li.addEventListener("click", () => {
             document.getElementById("search").value = city.name;
             suggestionsList.innerHTML = "";
+            if (onSelect) onSelect(city.name);
         });
+       
     });
 }
 

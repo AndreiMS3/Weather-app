@@ -67,6 +67,33 @@ body.default {
   background: linear-gradient(to bottom, #667db6, #0082c8);
   
 }
+/*Clear backgrounds*/
+body.clear,  body.snow, body.mist {
+  color: #222; 
+}
+
+body.clear #weather-data,
+body.clear #suggestions {
+  color: #222;
+}
+/*Dark backgrounds*/
+body.rain, 
+body.clouds, 
+body.thunderstorm, 
+body.default {
+  color: #f5f5f5; 
+}
+
+body.rain #weather-data,
+body.rain #suggestions,
+body.clouds #weather-data,
+body.clouds #suggestions,
+body.thunderstorm #weather-data,
+body.thunderstorm #suggestions,
+body.default #weather-data,
+body.default #suggestions {
+  color: #f5f5f5;
+}
 
 /* Inputs / botones */
 #weather-search {

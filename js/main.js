@@ -1,6 +1,14 @@
 import { displayWeather, showError } from "./UI.js";
 import { fetchWeather, fetchSuggestions } from "./script.js";
 
+function handleSubmitClick(){
+  searchWeather();
+  clearSuggestions();
+}
+function clearSuggestions(){
+  const suggestionsList = document.getElementById("suggestions");
+  if(suggestionsList) suggestionsList.innerHTML = "";
+}
 
 let timeoutId;
 
@@ -29,14 +37,14 @@ async function searchWeather() {
 }
 //Search by click or Enter key
 const submitBtn = document.getElementById("submit");
-if (submitBtn) submitBtn.addEventListener("click", searchWeather);
+if (submitBtn) submitBtn.addEventListener("click", handleSubmitClick);
 
 const searchEl = document.getElementById("search");
 if (searchEl) {
   searchEl.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
       event.preventDefault();
-      searchWeather();
+      handleSubmitClick();
     }
   });
 
@@ -48,7 +56,7 @@ if (searchEl) {
       return;
     }
     timeoutId = setTimeout(() => {
-      fetchSuggestions(text);
+      fetchSuggestions(text, handleSubmitClick);
     }, 650);
   });
 }
